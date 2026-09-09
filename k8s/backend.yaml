@@ -16,8 +16,10 @@ spec:
           imagePullPolicy: Never
           ports: [{ containerPort: 8080 }]
           env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://postgres:5432/skillorbit
+              value: jdbc:postgresql://postgres:5432/careerdb
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef: { name: postgres-secret, key: POSTGRES_USER }
