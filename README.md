@@ -277,23 +277,35 @@ Additional details and logs are available in: 📁 docs/Daily Engineering Journa
 ### Authentication
 
 - Login Screen
+- <img width="815" height="574" alt="image" src="https://github.com/user-attachments/assets/da1d167e-d822-4260-a506-8a1de1f1ebe6" />
+
 - Registration Screen
+- <img width="703" height="639" alt="image" src="https://github.com/user-attachments/assets/fec6ec4a-959f-4da9-bb0e-66cfaf0f9c0c" />
+
 
 ### Admin Module
-
+- Admin Page
+- <img width="1321" height="390" alt="image" src="https://github.com/user-attachments/assets/809d549f-5bad-499a-b1f9-817cabf02d60" />
 - User Management
+- <img width="1243" height="717" alt="image" src="https://github.com/user-attachments/assets/38abb3dc-839a-4cb3-8fe1-547c7562bb22" />
 - Role Management
+- <img width="1209" height="652" alt="image" src="https://github.com/user-attachments/assets/0cfaf098-1ca7-4462-8135-02dce45008d9" />
 - Skill Management
+- <img width="1204" height="766" alt="image" src="https://github.com/user-attachments/assets/fa05e502-239c-4099-b41f-18f32f770105" />
 - Roadmap Builder
+- <img width="1158" height="819" alt="image" src="https://github.com/user-attachments/assets/090d555d-0622-4649-98b3-5c66fbe5ce9d" />
+
 
 ### User Module
 
 - Role Selection
+- <img width="1172" height="747" alt="image" src="https://github.com/user-attachments/assets/e40eaf48-b59d-4d9d-a450-0deb52c61362" />
 - Skill Assessment
+- <img width="1254" height="799" alt="image" src="https://github.com/user-attachments/assets/00824e41-7767-4bb8-a614-020445c0ea14" />
 - Analysis Dashboard
+- <img width="1151" height="752" alt="image" src="https://github.com/user-attachments/assets/4392cbfe-be07-4b0c-96df-807555d3d06b" />
 - Learning Recommendations
-
-> Screenshots will be added in future releases.
+- <img width="1124" height="481" alt="image" src="https://github.com/user-attachments/assets/1496e3d8-24a4-4b5b-a8c3-5d53977a73dc" />
 
 ---
 
