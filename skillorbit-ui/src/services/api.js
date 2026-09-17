@@ -1,6 +1,3 @@
-// ✅ Base URL (env compatible)
-const BASE_URL = process.env.REACT_APP_API_URL || "";
-
 // ✅ Get token helper
 const getAuthHeader = () => {
   const token = localStorage.getItem("token");
@@ -12,7 +9,7 @@ const getAuthHeader = () => {
 
 // ✅ Create User
 export const createUser = async (user) => {
-  const response = await fetch(`${BASE_URL}/api/users`, {
+  const response = await fetch('/api/users', {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -26,7 +23,7 @@ export const createUser = async (user) => {
 
 // ✅ Get Users
 export const getUsers = async () => {
-  const response = await fetch(`${BASE_URL}/api/users`, {
+  const response = await fetch('/api/users', {
     headers: {
       ...getAuthHeader()
     }
@@ -37,7 +34,7 @@ export const getUsers = async () => {
 
 // ✅ Delete User
 export const deleteUser = async (id) => {
-  const response = await fetch(`${BASE_URL}/api/users/${id}`, {
+  const response = await fetch(`/api/users/${id}`, {
     method: "DELETE",
     headers: {
       ...getAuthHeader()

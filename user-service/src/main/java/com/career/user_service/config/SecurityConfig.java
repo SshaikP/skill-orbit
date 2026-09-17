@@ -7,12 +7,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
@@ -29,54 +27,56 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // ✅ ENABLE CORS (VERY IMPORTANT)
+            // Enable CORS
             .cors(cors -> cors.configurationSource(request -> {
                 CorsConfiguration corsConfig = new CorsConfiguration();
                 corsConfig.setAllowedOrigins(List.of("http://localhost:3000"));
-                corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                corsConfig.setAllowedMethods(
+                        List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                 corsConfig.setAllowedHeaders(List.of("*"));
                 corsConfig.setAllowCredentials(true);
                 return corsConfig;
             }))
 
-            // ✅ DISABLE CSRF
+            // Disable CSRF
             .csrf(csrf -> csrf.disable())
 
-            
-            // ✅ REQUIRED FOR H2 UI
-                .headers(headers -> headers.frameOptions().disable())
-                
-                    .authorizeHttpRequests(auth -> auth
+            // Required for H2 console
+            .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
-                        // ✅ Allow preflight
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .authorizeHttpRequests(auth -> auth
 
-                        // ✅ Public APIs
-                        .requestMatchers("/api/auth/**", "/h2-console/**").permitAll()
+                // Allow preflight requests
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // ✅ Allow users to fetch roles
-                        .requestMatchers(HttpMethod.GET, "/api/admin/roles").permitAll()
+                // Public endpoints
+                .requestMatchers(
+                        "/api/auth/**",
+                        "/h2-console/**",
+                        "/actuator/health/",
+                        "/actuator/health/**"
+                ).permitAll()
 
-                        // ✅ ✅ ✅ FIX: Allow users to fetch skills
-                        .requestMatchers(HttpMethod.GET, "/api/roleskills/**").permitAll()
+                // Public GET endpoints
+                .requestMatchers(HttpMethod.GET, "/api/admin/roles").permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/api/analysis").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/roleskills/**").permitAll()
 
-                        // ✅ Protect admin APIs
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/analysis").permitAll()
 
-                        // ✅ Other APIs require login
-                        .anyRequest().authenticated()
-                    )
+                // Admin-only endpoints
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
+                // Everything else requires authentication
+                .anyRequest().authenticated()
+            )
 
-            // ✅ JWT FILTER
+            // JWT Filter
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // ✅ PASSWORD ENCODER
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

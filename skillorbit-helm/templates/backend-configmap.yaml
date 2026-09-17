@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+
+data:
+
+  SPRING_PROFILES_ACTIVE: docker
+
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/{{ .Values.postgres.database }}"
