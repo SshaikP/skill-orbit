@@ -17,6 +17,7 @@ spec:
         app: frontend
 
     spec:
+      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | indent 8 }}
       containers:
         - name: frontend
 

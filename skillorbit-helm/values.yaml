@@ -1,8 +1,10 @@
 frontend:
+  imagePullSecrets:
+    - name: ghcr-secret
   image:
-    repository: skillorbit-frontend
-    tag: v1
-    pullPolicy: Never
+    repository: ghcr.io/sshaikp/skillorbit-frontend
+    tag: latest
+    pullPolicy: ifNotPresent
 
   service:
     type: NodePort
@@ -10,6 +12,8 @@ frontend:
     nodePort: 30080
 
 backend:
+  imagePullSecrets:
+    - name: ghcr-secret
 
   hpa:
     enabled: true
@@ -18,9 +22,9 @@ backend:
     targetCPUUtilizationPercentage: 70
 
   image:
-    repository: skillorbit-backend
-    tag: v4
-    pullPolicy: Never
+    repository: ghcr.io/sshaikp/skillorbit-backend
+    tag: latest
+    pullPolicy: ifNotPresent
 
   service:
     type: ClusterIP
