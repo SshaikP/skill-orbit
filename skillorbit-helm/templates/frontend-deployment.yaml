@@ -17,12 +17,14 @@ spec:
         app: frontend
 
     spec:
-      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- with .Values.frontend.imagePullSecrets }}
+      imagePullSecrets: {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: frontend
 
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
-          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.frontend.image.imagePullPolicy }}
 
           resources:
             requests:

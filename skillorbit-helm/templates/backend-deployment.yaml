@@ -16,13 +16,15 @@ spec:
         app: backend
 
     spec:
-      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | indent 8 }}
+      {{- with .Values.backend.imagePullSecrets }}
+      imagePullSecrets: {{- toYaml . | nindent 8 }}
+      {{- end }}
 
       containers:
         - name: backend
 
           image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
-          imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.backend.image.imagePullPolicy }}
 
           resources:
             requests:
