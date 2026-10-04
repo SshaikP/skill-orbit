@@ -1,324 +1,165 @@
 # ⚡ SkillOrbit
 
-A full-stack **Career Intelligence Platform** that helps users transition into new roles by analyzing skill gaps and generating personalized learning roadmaps.
+SkillOrbit is a cloud-native three-tier career intelligence platform that helps users identify skill gaps for a target role and generate personalized learning roadmaps.
 
----
+The application combines a React frontend, Spring Boot backend, and PostgreSQL database with a practical DevOps journey across Docker Compose, AWS infrastructure, Kubernetes, Helm, and Jenkins.
 
-## 🚀 Overview
+## Core Workflow
 
-SkillOrbit enables professionals to:
-
-- Identify skill gaps for a target role
-- Evaluate current proficiency levels
-- Generate personalized learning roadmaps
-- Accelerate career transitions
-- Follow structured learning paths
-
-The platform also provides a comprehensive administrator experience for managing roles, skills, learning paths, and users through a fully UI-driven system.
-
----
-
-## 📚 Table of Contents
-
-- [🧠 Core Concept](#-core-concept)
-- [✨ Features](#-features)
-- [🧱 Technology Stack](#-technology-stack)
-- [🏗️ Architecture](#️-architecture)
-- [🚀 Deployment Evolution](#-deployment-evolution)
-- [📖 Project Documentation](#-project-documentation)
-- [📸 Application Screenshots](#-application-screenshots)
-- [▶️ Local Development Setup](#️-local-development-setup)
-- [🐳 Containerized Deployment](#-containerized-deployment)
-- [🧪 Test Flow](#-test-flow)
-- [📁 Repository Structure](#-repository-structure)
-- [🌟 Project Highlights](#-project-highlights)
-- [🔮 Future Enhancements](#-future-enhancements)
-- [👨‍💻 Author](#-author)
-
----
-
-## 🧠 Core Concept
-
-```text
-ROLE
-  ↓
-ROLE SKILLS
-  ↓
-USER ASSESSMENT
-  ↓
-SKILL GAP ANALYSIS
-  ↓
-PERSONALIZED LEARNING ROADMAP
+```mermaid
+flowchart LR
+    A[Select Target Role] --> B[Load Required Skills]
+    B --> C[Complete Skill Assessment]
+    C --> D[Calculate Skill Gaps]
+    D --> E[Prioritize Learning Needs]
+    E --> F[Generate Learning Roadmap]
 ```
 
----
+## Features
 
-## ✨ Features
+### Authentication and Authorization
 
-### 🔐 Authentication & Security
-
-- JWT Authentication
+- User registration and login
+- JWT-based authentication
 - Spring Security
-- Role-Based Access Control (RBAC)
-- Admin and User authorization separation
+- Role-based access control for administrator and user capabilities
 
----
-
-### ⚙️ Admin Panel
-
-Administrators can:
+### Administrator Experience
 
 - Manage users
-- Create, update and delete roles
-- Create, update and delete skills
-- Configure learning roadmaps
-- Manage application master data entirely through the UI
+- Create, update, and remove career roles
+- Create, update, and remove skills
+- Associate skills with target roles
+- Configure learning-roadmap data through the application
 
-✅ Fully UI-driven administration
+### User Experience
 
-✅ No direct database manipulation required
+- Select a target role
+- Review role-specific skill requirements
+- Submit current proficiency levels
+- Run skill-gap analysis
+- Review prioritized learning recommendations
 
----
+## Technology Stack
 
-### 👤 User Dashboard
+| Layer | Technology |
+|---|---|
+| Frontend | React, JavaScript, HTML, CSS |
+| Backend | Java, Spring Boot, Spring Security, Spring Data JPA, REST APIs |
+| Database | H2 for the original local phase; PostgreSQL for containerized and orchestrated deployments |
+| Containers | Docker, Docker Compose |
+| Cloud and IaC | AWS, Terraform, S3 remote state, DynamoDB state locking |
+| Orchestration | Kubernetes, kind, Helm, Metrics Server, Horizontal Pod Autoscaler |
+| CI/CD and Security | Jenkins, GitHub Actions, GHCR, Trivy |
 
-Users can:
+## Application Architecture
 
-- Select target roles dynamically
-- Load role-specific skill requirements
-- Self-assess current proficiency
-- Run skill gap analysis
-- Receive personalized learning recommendations
+```mermaid
+flowchart LR
+    U[User Browser] --> F[React Frontend]
+    F --> B[Spring Boot Backend]
+    B --> D[(PostgreSQL)]
 
----
-
-### 📊 Skill Gap Analysis Engine
-
-The Analysis Engine:
-
-- Compares user skill levels against role requirements
-- Calculates proficiency gaps
-- Assigns learning priorities
-- Generates learning recommendations
-- Produces Free and Premium learning paths
-
----
-
-## 🧱 Technology Stack
-
-### Frontend
-
-- React.js
-- JavaScript
-- HTML5
-- CSS3
-
-### Backend
-
-- Spring Boot
-- Spring Security
-- JWT Authentication
-- REST APIs
-
-### Database
-
-#### Traditional Deployment
-- H2 Database
-
-#### Containerized Deployment
-- PostgreSQL
-
-### DevOps & Cloud
-
-- Docker
-- Docker Compose
-- GitHub
-- Aws (In Progress)
-- Kubernetes (Planned)
-
----
-
-## 🏗️ Architecture
-
-```text
-+-----------------------+
-|      React UI         |
-+-----------+-----------+
-            |
-            v
-+-----------------------+
-| Spring Boot REST APIs |
-+-----------+-----------+
-            |
-            v
-+-----------------------+
-| JWT Security Layer    |
-+-----------+-----------+
-            |
-            v
-+-----------------------+
-| Skill Analysis Engine |
-+-----------+-----------+
-            |
-            v
-+-----------------------+
-| Database Layer        |
-+-----------------------+
+    C[Runtime Configuration] --> F
+    C --> B
+    S[Secrets] --> B
+    S --> D
 ```
 
----
+## Deployment Evolution
 
-## 🚀 Deployment Evolution
+| Phase | Deployment model | Documentation |
+|---|---|---|
+| 1 | Traditional local deployment | [Traditional deployment](docs/Deployment-Strategies/01-traditional-deployment.md) |
+| 2 | Docker Compose deployment | [Containerized deployment](docs/Deployment-Strategies/02-containerized-deployment.md) |
+| 3 | AWS infrastructure with Terraform | [AWS cloud deployment](docs/Deployment-Strategies/03-cloud-deployment.md) |
+| 4 | Kubernetes orchestration | [Kubernetes deployment](docs/Deployment-Strategies/04-orchestrated-cloud-deployment.md) |
+| 5 | Helm-managed Kubernetes release | [Helm release management](docs/Engineering-Journal/05-helm-release-management.md) |
+| 6 | Jenkins-automated delivery | [Jenkins CI/CD automation](docs/Engineering-Journal/06-jenkins-cicd-automation.md) |
 
-SkillOrbit demonstrates the evolution of modern application deployment practices, progressing from a traditional local setup to a fully orchestrated cloud-native architecture.
+## Release Milestones
 
-| Phase | Deployment Model | Documentation |
-|---------|---------|---------|
-| Phase 1 | Traditional Deployment | [01-traditional-deployment.md](docs/01-traditional-deployment.md) |
-| Phase 2 | Containerized Deployment | [02-containerized-deployment.md](docs/02-containerized-deployment.md) |
-| Phase 3 | Cloud Deployment | [03-cloud-deployment.md](docs/03-cloud-deployment.md) |
-| Phase 4 | Orchestrated Cloud Deployment | [04-orchestrated-cloud-deployment.md](docs/04-orchestrated-cloud-deployment.md) |
+| Release | Milestone |
+|---|---|
+| `v1.2.2` | Manual Kubernetes deployment |
+| `v1.2.3` | Helm-managed Kubernetes deployment |
+| `v1.3.0` | Jenkins-integrated CI/CD deployment |
 
----
+## CI/CD Delivery Flow
 
-### Phase 1 – Traditional Deployment
+```mermaid
+flowchart LR
+    G[Source Checkout] --> B[Build Backend]
+    B --> F[Build Frontend]
+    F --> I[Build Runtime Images]
+    I --> T[Trivy Scan]
+    T --> R[Push to GHCR]
+    R --> C[Reconcile Pull Credentials]
+    C --> H[Helm Upgrade or Install]
+    H --> V[Validate Kubernetes Rollout]
+```
 
-📄 Documentation: [01-traditional-deployment.md](docs/01-traditional-deployment.md)
+The delivery model separates application compilation, runtime image packaging, and deployment. Jenkins builds the backend and frontend artifacts before the runtime images consume them.
 
-Includes:
+## Documentation
 
-- React Development Server
-- Spring Boot Application
-- H2 Database
-- Local Environment Setup
-- Manual Application Startup
+### Technical Documentation
 
----
+- [API documentation](docs/Technical-Documentation/api-docs.md)
+- [Setup guide](docs/Technical-Documentation/setup-guide.md)
+- [Engineering plan](docs/Technical-Documentation/sprint-plan.md)
 
-### Phase 2 – Containerized Deployment
+### Containerization
 
-📄 Documentation: [02-containerized-deployment.md](docs/02-containerized-deployment.md)
+- [Containerization overview](docs/Containerization/README.md)
+- [Container architecture](docs/Containerization/01-container-architecture.md)
+- [Docker images](docs/Containerization/02-docker-images.md)
+- [Docker Compose deployment](docs/Containerization/03-docker-compose-deployment.md)
+- [Networking and configuration](docs/Containerization/04-networking-and-configuration.md)
+- [Troubleshooting](docs/Containerization/05-troubleshooting.md)
 
-Includes:
+### Deployment Strategies
 
-- Frontend Docker Image
-- Backend Docker Image
-- PostgreSQL Container
-- Docker Networking
-- Docker Compose Orchestration
-- Environment Variable Management
+- [Traditional local deployment](docs/Deployment-Strategies/01-traditional-deployment.md)
+- [Containerized deployment](docs/Deployment-Strategies/02-containerized-deployment.md)
+- [AWS cloud deployment](docs/Deployment-Strategies/03-cloud-deployment.md)
+- [Kubernetes-orchestrated deployment](docs/Deployment-Strategies/04-orchestrated-cloud-deployment.md)
 
----
+### Engineering Journal
 
-### Phase 3 – Cloud Deployment
+- [Engineering journal overview](docs/Engineering-Journal/README.md)
+- [Application foundation](docs/Engineering-Journal/01-application-foundation.md)
+- [Docker Compose evolution](docs/Engineering-Journal/02-docker-compose-evolution.md)
+- [AWS and Terraform evolution](docs/Engineering-Journal/03-aws-terraform-evolution.md)
+- [Kubernetes evolution](docs/Engineering-Journal/04-kubernetes-evolution.md)
+- [Helm release management](docs/Engineering-Journal/05-helm-release-management.md)
+- [Jenkins CI/CD automation](docs/Engineering-Journal/06-jenkins-cicd-automation.md)
 
-📄 Documentation: [03-cloud-deployment.md](docs/03-cloud-deployment.md)
+## Local Development
 
-Includes:
+### Prerequisites
 
-- Aws Deployment Strategy
-- Container Registry Integration
-- Managed PostgreSQL Database
-- Environment Configuration
-- Cloud Networking
+- Java 17 or later
+- Maven 3.9 or later, or the included Maven wrapper
+- Node.js and npm
+- Git
 
----
-
-### Phase 4 – Orchestrated Cloud Deployment
-
-📄 Documentation: [04-orchestrated-cloud-deployment.md](docs/04-orchestrated-cloud-deployment.md)
-
-Includes:
-
-- Kubernetes Deployments
-- Services & Ingress
-- ConfigMaps & Secrets
-- Horizontal Pod Autoscaling
-- Rolling Updates
-- Self-Healing Architecture
-- High Availability
-
----
-
-## 📖 Project Documentation
-
-### 📐 Architecture & Technical Documentation
-
-| Document | Description |
-|-----------|------------|
-| [architecture.md](docs/architecture.md) | System architecture and design decisions |
-| [api-docs.md](docs/api-docs.md) | API specifications and endpoint documentation |
-| [setup-guide.md](docs/setup-guide.md) | Local development setup instructions |
-| [sprint-plan.md](docs/sprint-plan.md) | Sprint planning, milestones and roadmap |
-
----
-
-### 🐳 Containerization Documentation
-
-|Document                | Description
-|frontend-docker.md      | Docker file to build frontend image
-|backend-docker.md       | Docker file to build backend image
-|docker-compose.md       | Docker file to run both frontend, backend and DB (Containers in an isolated network)
-|docker-commands.md      | Document defining all the docker commands used 
-|container-networking.md | Document defining all the Network and Storage configurations made to link all the individual containers.
-
----
-
-### 📝 Daily Engineering Journal
-
-|Documents (daywise update files) | Walk through documents with all the development/troubleshooting happened day wise.
-
-Additional details and logs are available in: 📁 docs/Daily Engineering Journal/
-
----
-
-## 📸 Application Screenshots
-
-### Authentication
-
-- Login Screen
-- <img width="815" height="574" alt="image" src="https://github.com/user-attachments/assets/da1d167e-d822-4260-a506-8a1de1f1ebe6" />
-
-- Registration Screen
-- <img width="703" height="639" alt="image" src="https://github.com/user-attachments/assets/fec6ec4a-959f-4da9-bb0e-66cfaf0f9c0c" />
-
-
-### Admin Module
-- Admin Page
-- <img width="1321" height="390" alt="image" src="https://github.com/user-attachments/assets/809d549f-5bad-499a-b1f9-817cabf02d60" />
-- User Management
-- <img width="1243" height="717" alt="image" src="https://github.com/user-attachments/assets/38abb3dc-839a-4cb3-8fe1-547c7562bb22" />
-- Role Management
-- <img width="1209" height="652" alt="image" src="https://github.com/user-attachments/assets/0cfaf098-1ca7-4462-8135-02dce45008d9" />
-- Skill Management
-- <img width="1204" height="766" alt="image" src="https://github.com/user-attachments/assets/fa05e502-239c-4099-b41f-18f32f770105" />
-- Roadmap Builder
-- <img width="1158" height="819" alt="image" src="https://github.com/user-attachments/assets/090d555d-0622-4649-98b3-5c66fbe5ce9d" />
-
-
-### User Module
-
-- Role Selection
-- <img width="1172" height="747" alt="image" src="https://github.com/user-attachments/assets/e40eaf48-b59d-4d9d-a450-0deb52c61362" />
-- Skill Assessment
-- <img width="1254" height="799" alt="image" src="https://github.com/user-attachments/assets/00824e41-7767-4bb8-a614-020445c0ea14" />
-- Analysis Dashboard
-- <img width="1151" height="752" alt="image" src="https://github.com/user-attachments/assets/4392cbfe-be07-4b0c-96df-807555d3d06b" />
-- Learning Recommendations
-- <img width="1124" height="481" alt="image" src="https://github.com/user-attachments/assets/1496e3d8-24a4-4b5b-a8c3-5d53977a73dc" />
-
----
-
-## ▶️ Local Development Setup
-
-### Backend
+### Start the Backend
 
 ```bash
 cd user-service
 ./mvnw spring-boot:run
 ```
 
-### Frontend
+If the Maven wrapper is unavailable:
+
+```bash
+mvn spring-boot:run
+```
+
+### Start the Frontend
+
+Open a second terminal:
 
 ```bash
 cd skillorbit-ui
@@ -326,195 +167,70 @@ npm install
 npm start
 ```
 
----
+### Local Addresses
 
-## 🌐 Local Access URLs
+| Component | Address |
+|---|---|
+| Frontend | `http://localhost:3000` |
+| Backend | `http://localhost:8080` |
+| H2 console | `http://localhost:8080/h2-console` when enabled by the active local configuration |
 
-| Component | URL |
-|------------|-----|
-| Frontend | http://localhost:3000 |
-| Backend | http://localhost:8080 |
-| H2 Console | http://localhost:8080/h2-console |
+## Docker Compose
 
----
-
-## 🐳 Containerized Deployment
-
-Build and run all services:
+From the directory containing `docker-compose.yml`:
 
 ```bash
-docker compose up --build
+docker compose up --build -d
+docker compose ps
+docker compose logs -f
 ```
 
-### Access URLs
+Stop the stack while retaining named volumes:
 
-Frontend:
-
-```text
-http://localhost:3000
+```bash
+docker compose down
 ```
 
-Backend:
+Remove the stack and named volumes:
 
-```text
-http://localhost:8080
+```bash
+docker compose down -v
 ```
 
-PostgreSQL:
+> **Warning:** Removing volumes deletes PostgreSQL data managed by the Compose project.
 
-```text
-localhost:5432
-```
+## Validation Flow
 
----
+### Administrator
 
-## 🧪 Test Flow
+1. Log in with an administrator account.
+2. Create or update roles and skills.
+3. Associate skills with a target role.
+4. Configure learning-roadmap data.
+5. Validate user and access management.
 
-### Administrator Flow
+### User
 
-1. Login as Admin
-2. Create Roles
-3. Add Skills
-4. Configure Learning Paths
-5. Manage Users
+1. Register or log in.
+2. Select a target role.
+3. Load the required skills.
+4. Submit proficiency levels.
+5. Run the skill-gap analysis.
+6. Review prioritized learning recommendations.
 
-### User Flow
+## Security Notes
 
-1. Login as User
-2. Select Target Role
-3. Load Required Skills
-4. Enter Skill Levels
-5. Run Analysis
-6. Review Learning Recommendations
+- Do not commit real `.env` files, passwords, AWS credentials, JWT secrets, registry tokens, or Kubernetes Secret values.
+- Commit sanitized example configuration only.
+- Enforce authorization in the backend rather than relying on frontend visibility.
+- Use traceable image tags for releases.
+- Review destructive commands before running them.
 
----
+## Project Status
 
-## 📁 Repository Structure
+SkillOrbit demonstrates local development, Docker Compose containerization, Terraform-managed AWS infrastructure, Kubernetes deployment on kind, Helm packaging, Trivy image scanning, GHCR publishing, and Jenkins-driven rollout validation.
 
-```text
-skill-orbit
-│
-├── skillorbit-ui/ (Frontned)
-│   ├── src/
-│   ├── public/
-│   ├── Dockerfile
-│   └── .env, .env.docker
-│
-├── user-service/ (Backend)
-│   ├── src/
-│   ├── pom.xml
-│   ├── Dockerfile
-│   └── application.properties
-│
-├── docs/
-│   │
-│   ├── 📐 Architecture
-│   │   └── architecture.md
-│   │
-│   ├── 📘 Technical Documentation
-│   │   ├── api-docs.md
-│   │   ├── setup-guide.md
-│   │   └── sprint-plan.md
-│   │
-│   ├── 🚀 Deployment Strategies
-│   │   ├── 01-traditional-deployment.md
-│   │   ├── 02-containerized-deployment.md
-│   │   ├── 03-cloud-deployment.md
-│   │   └── 04-orchestrated-cloud-deployment.md
-│   │
-│   ├── 🐳 Containerization
-│   │   ├── frontend-docker.md
-│   │   ├── backend-docker.md
-│   │   ├── docker-compose.md
-│   │   ├── docker-commands.md
-│   │   └── container-networking.md
-│   │
-│   └── 📝 Daily Engineering Journal
-│       ├── day-1.md
-│       ├── day-2.md
-│       ├── ...
-│       └── day-13.md
-│
-├── docker-compose.yml
-├── .env
-├── .env.docker
-│
-└── README.md
-```
+## Author
 
----
-
-## 🌟 Project Highlights
-
-✅ Full-stack application architecture
-
-✅ JWT-based authentication
-
-✅ Role-based access control
-
-✅ RESTful API design
-
-✅ Dynamic UI-driven administration
-
-✅ Skill Gap Analysis Engine
-
-✅ Personalized Learning Roadmaps
-
-✅ Docker Containerization
-
-✅ Environment-Based Configuration
-
-✅ Scalable Cloud-Ready Architecture
-
-✅ Daily Engineering Journal
-
-✅ DevOps Learning Journey Documentation
-
----
-
-## 🔮 Future Enhancements
-
-### Application
-
-- Progress Tracking
-- User Skill History
-- Recommendation Engine
-- Dashboard Analytics
-- Notifications
-
-### DevOps & Cloud
-
-- GitHub Actions CI/CD
-- AWS/Azure/GCP Deployment
-- Kubernetes Deployment
-- Monitoring & Logging
-- Security Scanning
-- Auto Scaling
-
----
-
-## 👨‍💻 Author
-
-**Shaik Sadiq Pasha**
-Cloud Applications Consultant · AWS Certified Solutions Architect – Associate
-
-[LinkedIn](https://www.linkedin.com/in/shaik-sadiq-pasha/) · [sadiqpasha7474@gmail.com](mailto:sadiqpasha7474@gmail.com) · [GitHub](https://github.com/SshaikP)
-
----
-
-## ⭐ Final Note
-
-SkillOrbit demonstrates a production-style application architecture that combines:
-
-- Secure API Development
-- JWT Authentication
-- Role-Based Authorization
-- React Frontend Development
-- Spring Boot Backend Services
-- Database Design
-- Containerization
-- Cloud Deployment Practices
-- Kubernetes Readiness
-- DevOps Learning & Documentation
-
-The project is designed as a practical showcase of modern Full-Stack, Cloud, and DevOps engineering principles.
+**Sadiq Pasha Shaik**  
+Cloud Applications Consultant
